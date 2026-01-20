@@ -1,10 +1,1128 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <title>テスト</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Arao Kohei のポートフォリオ</title>
+
+  <style>
+    /* -----------------------------
+      Base
+    ------------------------------ */
+    :root{
+      --bg0:#060b1f;
+      --bg1:#071b35;
+      --primary:#2f6bff;
+      --primary2:#00c2ff;
+      --accent:#7c5cff;
+      --text:#eaf1ff;
+      --muted:#b7c5e6;
+      --card:rgba(255,255,255,.06);
+      --card2:rgba(255,255,255,.10);
+      --border:rgba(255,255,255,.14);
+      --shadow: 0 18px 60px rgba(0,0,0,.35);
+      --radius: 18px;
+      --radius2: 26px;
+      --maxw: 1100px;
+    }
+
+    *{ box-sizing:border-box; }
+    html{ scroll-behavior:smooth; }
+    body{
+      margin:0;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 800px at 20% 10%, rgba(0,194,255,.20), transparent 55%),
+        radial-gradient(900px 700px at 85% 20%, rgba(124,92,255,.22), transparent 50%),
+        linear-gradient(160deg, var(--bg0), var(--bg1));
+      font-family: Meiryo, "メイリオ", Arial, sans-serif;
+      line-height:1.7;
+      letter-spacing:.02em;
+    }
+    img{ max-width:100%; display:block; }
+    a{ color:inherit; text-decoration:none; }
+    .container{
+      width:min(var(--maxw), 92vw);
+      margin:0 auto;
+    }
+
+    /* -----------------------------
+      Header
+    ------------------------------ */
+    header{
+      position:sticky;
+      top:0;
+      z-index:1000;
+      backdrop-filter: blur(14px);
+      background: linear-gradient(180deg, rgba(6,11,31,.82), rgba(6,11,31,.55));
+      border-bottom:1px solid rgba(255,255,255,.10);
+    }
+    .header-inner{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:14px 0;
+      gap:16px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width: 220px;
+    }
+    .logo{
+      width:42px; height:42px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(47,107,255,.95), rgba(0,194,255,.85));
+      box-shadow: 0 10px 30px rgba(47,107,255,.25);
+      border:1px solid rgba(255,255,255,.20);
+      position:relative;
+      overflow:hidden;
+    }
+    .logo::after{
+      content:"";
+      position:absolute;
+      inset:-40%;
+      background: radial-gradient(circle, rgba(255,255,255,.35), transparent 55%);
+      transform: rotate(15deg);
+    }
+    .brand h1{
+      font-size: 16px;
+      margin:0;
+      font-weight: 700;
+    }
+    .brand small{
+      display:block;
+      color:var(--muted);
+      font-size:12px;
+      margin-top:2px;
+      font-family: Arial, Meiryo, "メイリオ", sans-serif;
+      letter-spacing:.04em;
+    }
+
+    nav{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    nav a{
+      font-size: 13px;
+      color: rgba(234,241,255,.88);
+      padding:8px 10px;
+      border-radius: 12px;
+      border:1px solid transparent;
+      transition: .2s ease;
+      white-space:nowrap;
+    }
+    nav a:hover{
+      background: rgba(255,255,255,.06);
+      border-color: rgba(255,255,255,.12);
+      transform: translateY(-1px);
+    }
+
+    .menu-toggle{
+      display:none;
+      border:1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.06);
+      color:var(--text);
+      border-radius: 12px;
+      padding:10px 12px;
+      cursor:pointer;
+      transition:.2s ease;
+    }
+    .menu-toggle:hover{ background: rgba(255,255,255,.10); }
+
+    /* -----------------------------
+      Hero
+    ------------------------------ */
+    .hero{
+      position:relative;
+      padding: 56px 0 42px;
+    }
+    .hero-visual{
+      position:relative;
+      border-radius: var(--radius2);
+      overflow:hidden;
+      min-height: 420px;
+      box-shadow: var(--shadow);
+      border:1px solid rgba(255,255,255,.10);
+      background:
+        linear-gradient(135deg, rgba(47,107,255,.75), rgba(0,194,255,.35)),
+        url("https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=2000&q=80") center/cover no-repeat;
+    }
+    .hero-visual::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(800px 400px at 20% 25%, rgba(255,255,255,.20), transparent 60%),
+        linear-gradient(180deg, rgba(6,11,31,.10), rgba(6,11,31,.55));
+    }
+    .hero-content{
+      position:absolute;
+      inset:0;
+      display:flex;
+      align-items:flex-end;
+      padding: 42px;
+    }
+    .hero-box{
+      max-width: 680px;
+      background: rgba(6,11,31,.55);
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 22px;
+      padding: 22px 22px 18px;
+      backdrop-filter: blur(12px);
+    }
+    .hero-kicker{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      font-size: 12px;
+      color: rgba(234,241,255,.86);
+      padding: 6px 10px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      margin-bottom: 10px;
+      font-family: Arial, Meiryo, "メイリオ", sans-serif;
+      letter-spacing:.08em;
+      text-transform: uppercase;
+    }
+    .dot{
+      width:8px; height:8px;
+      border-radius:50%;
+      background: linear-gradient(135deg, var(--primary), var(--primary2));
+      box-shadow: 0 0 0 5px rgba(0,194,255,.12);
+    }
+    .hero h2{
+      margin: 0 0 8px;
+      font-size: clamp(22px, 3.2vw, 34px);
+      line-height: 1.25;
+    }
+    .hero p{
+      margin: 0 0 14px;
+      color: rgba(234,241,255,.86);
+      font-size: 14px;
+    }
+    .hero-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top: 8px;
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding: 10px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      font-weight: 700;
+      font-size: 13px;
+      transition: .2s ease;
+      cursor:pointer;
+    }
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(47,107,255,.95), rgba(0,194,255,.85));
+      border-color: rgba(255,255,255,.18);
+      box-shadow: 0 16px 40px rgba(0,194,255,.18);
+    }
+    .btn:hover{ transform: translateY(-1px); filter: brightness(1.05); }
+
+    /* -----------------------------
+      Sections
+    ------------------------------ */
+    section{
+      padding: 44px 0;
+    }
+    .section-title{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:16px;
+      margin-bottom: 18px;
+    }
+    .section-title h3{
+      margin:0;
+      font-size: 18px;
+      letter-spacing:.04em;
+    }
+    .section-title p{
+      margin:0;
+      color: var(--muted);
+      font-size: 13px;
+      max-width: 560px;
+    }
+
+    .panel{
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.04));
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: var(--radius);
+      box-shadow: 0 14px 45px rgba(0,0,0,.25);
+    }
+    .panel-inner{ padding: 22px; }
+
+    /* -----------------------------
+      Profile
+    ------------------------------ */
+    .profile-grid{
+      display:grid;
+      grid-template-columns: 240px 1fr;
+      gap: 18px;
+      align-items: center;
+    }
+    .avatar{
+      width: 220px;
+      height: 220px;
+      border-radius: 26px;
+      overflow:hidden;
+      border: 1px solid rgba(255,255,255,.16);
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.16), transparent 55%),
+        linear-gradient(135deg, rgba(47,107,255,.50), rgba(0,194,255,.20));
+      box-shadow: 0 16px 45px rgba(0,0,0,.28);
+      position:relative;
+    }
+    .avatar img{
+      width:100%;
+      height:100%;
+      object-fit: cover;
+      opacity: .95;
+    }
+    .avatar .fallback{
+      position:absolute;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      text-align:center;
+      color: rgba(234,241,255,.86);
+      font-size: 13px;
+    }
+    .profile-meta h4{
+      margin: 0 0 6px;
+      font-size: 20px;
+      font-family: Arial, Meiryo, "メイリオ", sans-serif;
+      letter-spacing:.02em;
+    }
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      color: rgba(234,241,255,.88);
+      font-size: 12px;
+      margin-bottom: 10px;
+    }
+    .profile-meta p{
+      margin: 8px 0 0;
+      color: rgba(234,241,255,.86);
+      font-size: 14px;
+    }
+    .meta-list{
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap:10px;
+      margin-top: 14px;
+    }
+    .meta-item{
+      padding: 12px;
+      border-radius: 14px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+    }
+    .meta-item b{
+      display:block;
+      font-size: 12px;
+      color: rgba(234,241,255,.90);
+      margin-bottom: 4px;
+    }
+    .meta-item span{
+      display:block;
+      font-size: 13px;
+      color: var(--muted);
+      font-family: Arial, Meiryo, "メイリオ", sans-serif;
+      letter-spacing:.02em;
+    }
+
+    /* -----------------------------
+      Timeline
+    ------------------------------ */
+    .timeline{
+      position:relative;
+      padding-left: 18px;
+      display:grid;
+      gap: 14px;
+    }
+    .timeline::before{
+      content:"";
+      position:absolute;
+      left:7px;
+      top:6px;
+      bottom:6px;
+      width:2px;
+      background: linear-gradient(180deg, rgba(47,107,255,.9), rgba(0,194,255,.25));
+      border-radius: 999px;
+      opacity:.9;
+    }
+    .t-item{
+      position:relative;
+      padding: 14px 14px 14px 16px;
+      border-radius: 16px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+    }
+    .t-item::before{
+      content:"";
+      position:absolute;
+      left:-18px;
+      top:18px;
+      width:12px; height:12px;
+      border-radius:50%;
+      background: linear-gradient(135deg, rgba(47,107,255,.95), rgba(0,194,255,.85));
+      box-shadow: 0 0 0 6px rgba(0,194,255,.10);
+      border:1px solid rgba(255,255,255,.25);
+    }
+    .t-meta{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-bottom: 6px;
+    }
+    .t-year{
+      font-family: Arial, Meiryo, "メイリオ", sans-serif;
+      font-size: 12px;
+      letter-spacing:.06em;
+      color: rgba(234,241,255,.88);
+      padding: 3px 8px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+    }
+    .t-title{
+      font-weight: 700;
+      font-size: 14px;
+      margin:0;
+    }
+    .t-desc{
+      margin:0;
+      font-size: 13px;
+      color: rgba(234,241,255,.82);
+    }
+
+    /* -----------------------------
+      Skills
+    ------------------------------ */
+    .skills-grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .skill-card{
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      border-radius: 16px;
+      padding: 14px;
+    }
+    .skill-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom: 10px;
+    }
+    .skill-head b{
+      font-size: 14px;
+      font-family: Arial, Meiryo, "メイリオ", sans-serif;
+    }
+    .skill-head span{
+      font-size: 12px;
+      color: var(--muted);
+      font-family: Arial, Meiryo, "メイリオ", sans-serif;
+      letter-spacing:.06em;
+    }
+    .progress{
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.10);
+      overflow:hidden;
+    }
+    .bar{
+      height: 100%;
+      width: 0%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(47,107,255,.95), rgba(0,194,255,.90));
+      box-shadow: 0 12px 30px rgba(0,194,255,.12);
+      transition: width 1.1s ease;
+    }
+    .skills-note{
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    /* -----------------------------
+      Works (Cards)
+    ------------------------------ */
+    .cards{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .card{
+      border-radius: 18px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      box-shadow: 0 12px 40px rgba(0,0,0,.22);
+      transition: transform .2s ease, border-color .2s ease, background .2s ease;
+      display:flex;
+      flex-direction:column;
+      min-height: 330px;
+    }
+    .card:hover{
+      transform: translateY(-3px);
+      border-color: rgba(255,255,255,.18);
+      background: rgba(255,255,255,.07);
+    }
+    .card-img{
+      height: 160px;
+      background:
+        linear-gradient(135deg, rgba(47,107,255,.65), rgba(0,194,255,.25));
+      position:relative;
+      overflow:hidden;
+    }
+    .card-img img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      opacity:.92;
+    }
+    .card-body{
+      padding: 14px 14px 16px;
+      display:flex;
+      flex-direction:column;
+      gap: 8px;
+      flex:1;
+    }
+    .card-body h4{
+      margin:0;
+      font-size: 15px;
+    }
+    .card-body p{
+      margin:0;
+      font-size: 13px;
+      color: rgba(234,241,255,.84);
+    }
+    .tagrow{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-top:auto;
+      padding-top: 8px;
+    }
+    .tag{
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      color: rgba(234,241,255,.88);
+      font-family: Arial, Meiryo, "メイリオ", sans-serif;
+      letter-spacing:.06em;
+    }
+
+    /* -----------------------------
+      Contact
+    ------------------------------ */
+    .contact-grid{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 14px;
+      align-items:start;
+    }
+    .contact-list{
+      display:grid;
+      gap:10px;
+    }
+    .contact-item{
+      padding: 12px;
+      border-radius: 16px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+    }
+    .contact-item b{
+      display:block;
+      font-size: 12px;
+      color: rgba(234,241,255,.90);
+      margin-bottom: 4px;
+    }
+    .contact-item a{
+      color: rgba(234,241,255,.92);
+      font-family: Arial, Meiryo, "メイリオ", sans-serif;
+      font-size: 13px;
+      border-bottom: 1px dashed rgba(255,255,255,.22);
+    }
+    form{
+      display:grid;
+      gap:10px;
+    }
+    label{
+      display:grid;
+      gap:6px;
+      font-size: 12px;
+      color: rgba(234,241,255,.90);
+    }
+    input, textarea{
+      width:100%;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(6,11,31,.40);
+      color: var(--text);
+      outline:none;
+      font-family: Meiryo, "メイリオ", Arial, sans-serif;
+      font-size: 14px;
+      transition: .2s ease;
+    }
+    input:focus, textarea:focus{
+      border-color: rgba(0,194,255,.35);
+      box-shadow: 0 0 0 4px rgba(0,194,255,.10);
+    }
+    textarea{ min-height: 110px; resize: vertical; }
+    .hint{
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 6px;
+    }
+
+    /* -----------------------------
+      Footer
+    ------------------------------ */
+    footer{
+      padding: 28px 0 40px;
+      color: rgba(234,241,255,.72);
+      border-top: 1px solid rgba(255,255,255,.10);
+      background: linear-gradient(180deg, rgba(6,11,31,.35), rgba(6,11,31,.65));
+    }
+    .footer-inner{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+    .footer-inner small{
+      font-family: Arial, Meiryo, "メイリオ", sans-serif;
+      letter-spacing:.04em;
+    }
+
+    /* -----------------------------
+      Fade-in animation (scroll)
+    ------------------------------ */
+    .reveal{
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .reveal.is-visible{
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* -----------------------------
+      Responsive
+    ------------------------------ */
+    @media (max-width: 900px){
+      .cards{ grid-template-columns: 1fr; }
+      .contact-grid{ grid-template-columns: 1fr; }
+      .skills-grid{ grid-template-columns: 1fr; }
+      .profile-grid{ grid-template-columns: 1fr; }
+      .avatar{ width: 100%; height: 240px; }
+      .hero-content{ padding: 20px; align-items: flex-end; }
+      .hero-visual{ min-height: 440px; }
+    }
+    @media (max-width: 720px){
+      .brand{ min-width: auto; }
+      nav{
+        display:none;
+        width:100%;
+        justify-content:flex-start;
+        padding: 10px 0 4px;
+        border-top: 1px solid rgba(255,255,255,.10);
+      }
+      header.is-open nav{ display:flex; }
+      .menu-toggle{ display:inline-flex; }
+      .header-inner{ flex-wrap:wrap; }
+      .hero-box{ padding: 16px; border-radius: 18px; }
+      .hero p{ font-size: 13px; }
+    }
+  </style>
 </head>
+
 <body>
-  <h1>Hello imaratio!</h1>
+  <!-- =========================
+    Header
+  ========================== -->
+  <header id="top">
+    <div class="container">
+      <div class="header-inner">
+        <div class="brand" aria-label="サイトタイトル">
+          <div class="logo" aria-hidden="true"></div>
+          <div>
+            <h1>Arao Kohei のポートフォリオ</h1>
+            <small>PORTFOLIO / PROFILE / WORKS</small>
+          </div>
+        </div>
+
+        <button class="menu-toggle" id="menuToggle" aria-label="メニューを開く" aria-expanded="false">
+          メニュー
+        </button>
+
+        <nav aria-label="セクションナビゲーション">
+          <a href="#profile">プロフィール</a>
+          <a href="#career">経歴</a>
+          <a href="#skills">スキル</a>
+          <a href="#works">作品・活動</a>
+          <a href="#contact">連絡先</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================
+    Hero
+  ========================== -->
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="hero-visual reveal">
+          <div class="hero-content">
+            <div class="hero-box">
+              <div class="hero-kicker"><span class="dot" aria-hidden="true"></span> Professional Portfolio</div>
+              <h2>学びをデザインし、成果につなげる。</h2>
+              <p>
+                教育・制作・開発を横断しながら、目的に合った最適解を丁寧に形にします。
+                伝わる設計、使えるアウトプット、継続できる運用を重視しています。
+              </p>
+              <div class="hero-actions">
+                <a class="btn primary" href="#works">作品を見る</a>
+                <a class="btn" href="#contact">問い合わせる</a>
+                <a class="btn" href="#profile">自己紹介</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================
+      Profile
+    ========================== -->
+    <section id="profile">
+      <div class="container">
+        <div class="section-title reveal">
+          <div>
+            <h3>プロフィール</h3>
+            <p>顔写真（profile.png）を配置し、基本情報と強みを簡潔にまとめています。</p>
+          </div>
+        </div>
+
+        <div class="panel reveal">
+          <div class="panel-inner">
+            <div class="profile-grid">
+              <div class="avatar" aria-label="顔写真">
+                <!-- profile.png を同じフォルダに置くと表示されます -->
+                <img src="profile.png" alt="Arao Kohei のプロフィール画像" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="fallback" style="display:none;">
+                  profile.png が見つかりません。<br>
+                  同じフォルダに profile.png を配置してください。
+                </div>
+              </div>
+
+              <div class="profile-meta">
+                <div class="badge">
+                  <span class="dot" aria-hidden="true"></span>
+                  <span>教育 × コンテンツ制作 × Web</span>
+                </div>
+
+                <h4>Arao Kohei</h4>
+                <p>
+                  職業・肩書き：理科教員／教材制作／映像・デザイン制作（サンプル）
+                </p>
+                <p>
+                  伝えたい情報を整理し、見る人が迷わない導線を設計することが得意です。
+                  学習コンテンツ、ポートフォリオ、学校広報など「目的達成のための制作」を軸に活動しています。
+                </p>
+
+                <div class="meta-list" aria-label="補足情報">
+                  <div class="meta-item">
+                    <b>得意領域</b>
+                    <span>教材設計 / UI / 文章設計</span>
+                  </div>
+                  <div class="meta-item">
+                    <b>制作スタイル</b>
+                    <span>要件整理 → 試作 → 改善</span>
+                  </div>
+                  <div class="meta-item">
+                    <b>重視すること</b>
+                    <span>読みやすさ / 再現性 / 運用性</span>
+                  </div>
+                  <div class="meta-item">
+                    <b>対応可能</b>
+                    <span>Web / 動画 / 資料作成</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================
+      Career (Timeline)
+    ========================== -->
+    <section id="career">
+      <div class="container">
+        <div class="section-title reveal">
+          <div>
+            <h3>経歴</h3>
+            <p>学歴・職歴をタイムライン形式で表示します（サンプル文）。</p>
+          </div>
+        </div>
+
+        <div class="panel reveal">
+          <div class="panel-inner">
+            <div class="timeline" aria-label="経歴タイムライン">
+              <div class="t-item">
+                <div class="t-meta">
+                  <span class="t-year">2017 - 2021</span>
+                  <p class="t-title">学歴：理工系学部（サンプル）</p>
+                </div>
+                <p class="t-desc">
+                  基礎学力の土台を固めつつ、発表・レポート・チーム課題などを通じて「伝える力」を磨きました。
+                </p>
+              </div>
+
+              <div class="t-item">
+                <div class="t-meta">
+                  <span class="t-year">2021 - 2023</span>
+                  <p class="t-title">職歴：教育関連（サンプル）</p>
+                </div>
+                <p class="t-desc">
+                  授業設計、教材作成、評価・改善のサイクルを回し、学習成果につながる運用を行いました。
+                </p>
+              </div>
+
+              <div class="t-item">
+                <div class="t-meta">
+                  <span class="t-year">2023 - 現在</span>
+                  <p class="t-title">活動：制作・改善の実践（サンプル）</p>
+                </div>
+                <p class="t-desc">
+                  Web／動画／資料の制作を通して、情報発信の質と速度を両立する仕組みづくりに取り組んでいます。
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================
+      Skills (Progress bars)
+    ========================== -->
+    <section id="skills">
+      <div class="container">
+        <div class="section-title reveal">
+          <div>
+            <h3>スキル</h3>
+            <p>言語・ツールの習熟度をプログレスバーで視覚化します（数値は例）。</p>
+          </div>
+        </div>
+
+        <div class="panel reveal">
+          <div class="panel-inner">
+            <div class="skills-grid" aria-label="スキル一覧">
+              <div class="skill-card">
+                <div class="skill-head">
+                  <b>HTML / CSS</b>
+                  <span>80%</span>
+                </div>
+                <div class="progress" aria-label="HTML/CSS 80%">
+                  <div class="bar" data-level="80"></div>
+                </div>
+              </div>
+
+              <div class="skill-card">
+                <div class="skill-head">
+                  <b>JavaScript</b>
+                  <span>65%</span>
+                </div>
+                <div class="progress" aria-label="JavaScript 65%">
+                  <div class="bar" data-level="65"></div>
+                </div>
+              </div>
+
+              <div class="skill-card">
+                <div class="skill-head">
+                  <b>Python</b>
+                  <span>60%</span>
+                </div>
+                <div class="progress" aria-label="Python 60%">
+                  <div class="bar" data-level="60"></div>
+                </div>
+              </div>
+
+              <div class="skill-card">
+                <div class="skill-head">
+                  <b>Premiere Pro</b>
+                  <span>75%</span>
+                </div>
+                <div class="progress" aria-label="Premiere Pro 75%">
+                  <div class="bar" data-level="75"></div>
+                </div>
+              </div>
+
+              <div class="skill-card">
+                <div class="skill-head">
+                  <b>Figma / デザイン</b>
+                  <span>70%</span>
+                </div>
+                <div class="progress" aria-label="Figma 70%">
+                  <div class="bar" data-level="70"></div>
+                </div>
+              </div>
+
+              <div class="skill-card">
+                <div class="skill-head">
+                  <b>ドキュメント作成（資料）</b>
+                  <span>85%</span>
+                </div>
+                <div class="progress" aria-label="資料作成 85%">
+                  <div class="bar" data-level="85"></div>
+                </div>
+              </div>
+            </div>
+
+            <p class="skills-note">
+              注：数値はサンプルです。実際の経験に合わせて項目と割合を更新してください。
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================
+      Works (Cards)
+    ========================== -->
+    <section id="works">
+      <div class="container">
+        <div class="section-title reveal">
+          <div>
+            <h3>作品・活動</h3>
+            <p>3つの作品をカード形式で掲載します（画像／タイトル／説明）。</p>
+          </div>
+        </div>
+
+        <div class="cards reveal" aria-label="作品カード一覧">
+          <article class="card">
+            <div class="card-img">
+              <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1400&q=80" alt="作品1のイメージ">
+            </div>
+            <div class="card-body">
+              <h4>作品1：授業用コンテンツ設計（サンプル）</h4>
+              <p>
+                学習者のつまずきを分解し、理解の階段を設計した教材・スライドの制作例。
+                文章量、図解、演習配分を調整して成果につなげました。
+              </p>
+              <div class="tagrow">
+                <span class="tag">EDU</span>
+                <span class="tag">Design</span>
+                <span class="tag">Docs</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-img">
+              <img src="https://images.unsplash.com/photo-1523437113738-bbd3cc89fb19?auto=format&fit=crop&w=1400&q=80" alt="作品2のイメージ">
+            </div>
+            <div class="card-body">
+              <h4>作品2：学校広報の動画制作（サンプル）</h4>
+              <p>
+                撮影素材の整理、構成案、テロップ・BGM設計、最終出力まで一貫して対応。
+                視聴維持率を意識したテンポに調整しました。
+              </p>
+              <div class="tagrow">
+                <span class="tag">Video</span>
+                <span class="tag">Premiere</span>
+                <span class="tag">Brand</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-img">
+              <img src="https://images.unsplash.com/photo-1521737852567-6949f3f9f2b5?auto=format&fit=crop&w=1400&q=80" alt="作品3のイメージ">
+            </div>
+            <div class="card-body">
+              <h4>作品3：Webポートフォリオ制作（サンプル）</h4>
+              <p>
+                単一HTMLで完結する構成にし、読みやすさと更新性を両立。
+                レスポンシブ対応とフェードイン演出で印象を整えました。
+              </p>
+              <div class="tagrow">
+                <span class="tag">Web</span>
+                <span class="tag">HTML</span>
+                <span class="tag">UI</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================
+      Contact
+    ========================== -->
+    <section id="contact">
+      <div class="container">
+        <div class="section-title reveal">
+          <div>
+            <h3>連絡先</h3>
+            <p>メール・SNSリンク・お問い合わせフォーム（見た目のみ）を掲載します。</p>
+          </div>
+        </div>
+
+        <div class="panel reveal">
+          <div class="panel-inner">
+            <div class="contact-grid">
+              <div class="contact-list" aria-label="連絡先情報">
+                <div class="contact-item">
+                  <b>メール</b>
+                  <a href="#" onclick="return false;" aria-label="メールアドレス（サンプル）">example@example.com</a>
+                </div>
+                <div class="contact-item">
+                  <b>Twitter</b>
+                  <a href="#" onclick="return false;" aria-label="Twitterリンク（サンプル）">https://twitter.com/yourname</a>
+                </div>
+                <div class="contact-item">
+                  <b>GitHub</b>
+                  <a href="#" onclick="return false;" aria-label="GitHubリンク（サンプル）">https://github.com/yourname</a>
+                </div>
+                <div class="contact-item">
+                  <b>LinkedIn</b>
+                  <a href="#" onclick="return false;" aria-label="LinkedInリンク（サンプル）">https://www.linkedin.com/in/yourname</a>
+                </div>
+                <div class="hint">
+                  注：上記はサンプルです。実際のアカウントURLに差し替えてください。
+                </div>
+              </div>
+
+              <div aria-label="お問い合わせフォーム（見た目のみ）">
+                <form onsubmit="return false;">
+                  <label>
+                    お名前
+                    <input type="text" placeholder="例：荒尾 航平" />
+                  </label>
+                  <label>
+                    メールアドレス
+                    <input type="email" placeholder="例：kohei@example.com" />
+                  </label>
+                  <label>
+                    お問い合わせ内容
+                    <textarea placeholder="ご用件を入力してください（送信はされません）"></textarea>
+                  </label>
+                  <button class="btn primary" type="submit">送信（ダミー）</button>
+                  <div class="hint">このフォームはデザイン用です。実運用にはサーバー側処理が必要です。</div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- =========================
+    Footer
+  ========================== -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <small>© <span id="year"></span> Arao Kohei. All Rights Reserved.</small>
+        <small><a href="#top" style="border-bottom:1px dashed rgba(255,255,255,.22);">ページ上部へ</a></small>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // -----------------------------
+    // Mobile menu toggle
+    // -----------------------------
+    (function(){
+      const header = document.querySelector("header");
+      const btn = document.getElementById("menuToggle");
+
+      btn?.addEventListener("click", () => {
+        const open = header.classList.toggle("is-open");
+        btn.setAttribute("aria-expanded", String(open));
+      });
+
+      // Close menu after clicking a nav link on mobile
+      document.querySelectorAll("nav a").forEach(a => {
+        a.addEventListener("click", () => {
+          if (header.classList.contains("is-open")) {
+            header.classList.remove("is-open");
+            btn.setAttribute("aria-expanded", "false");
+          }
+        });
+      });
+    })();
+
+    // -----------------------------
+    // Scroll reveal (fade-in)
+    // -----------------------------
+    (function(){
+      const targets = document.querySelectorAll(".reveal");
+      const bars = document.querySelectorAll(".bar");
+
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+
+            // When the skills section reveals, animate progress bars
+            if (entry.target.id === "skills" || entry.target.closest("#skills")) {
+              bars.forEach(bar => {
+                const level = bar.getAttribute("data-level") || "0";
+                bar.style.width = level + "%";
+              });
+            }
+          }
+        });
+      }, { threshold: 0.12 });
+
+      targets.forEach(el => io.observe(el));
+    })();
+
+    // -----------------------------
+    // Footer year
+    // -----------------------------
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
